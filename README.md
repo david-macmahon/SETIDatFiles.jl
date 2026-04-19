@@ -120,7 +120,7 @@ is passed, the `freq_end` values from the file will be ignored and instead be
 calculated as:
 
 ```jl
-freq_end = freq_start + Drift_Rate * hdr.tsamp * hdr.nsamps
+freq_end = freq_start + Drift_Rate/1e6 * hdr.tsamp * hdr.nsamps
 ```
 
 A function or Type may be passed as the first parameter to modify the hits

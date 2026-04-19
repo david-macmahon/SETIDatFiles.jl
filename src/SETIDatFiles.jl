@@ -109,7 +109,7 @@ is passed, the `freq_end` values from the files will be ignored and instead be
 calculated as:
 
 ```jl
-freq_end = freq_start + Drift_Rate * hdr.tsamp * hdr.nsamps
+freq_end = freq_start + Drift_Rate/1e6 * hdr.tsamp * hdr.nsamps
 ```
 
 A function or Type may be passed as the first parameter to modify the hits
@@ -206,8 +206,8 @@ function readdat(io::IO; fix_freq_end=false)
         # freq_start, Drift_Rate, and observation length.
         if fix_freq_end
             obslength = hdr.tsamp * hdr.nsamps
-            # freq_end = freq_start + Drift_Rate * obslength
-            dat[:, 8] .= dat[:, 7] .+ dat[:, 2] .* obslength
+            # freq_end = freq_start + Drift_Rate/1e6 * obslength
+            dat[:, 8] .= dat[:, 7] .+ dat[:, 2]/1e6 .* obslength
         end
 
         DatFileHit.(eachrow(dat))
