@@ -100,14 +100,34 @@ end
 DatFileHit(v::AbstractVector) = DatFileHit(v...)
 
 """
-    readdat(src; fix_freq_end=false) -> (DatFileHeader, Vector{DatFileHit})
+    readdat(src; fix_freq_end=false) -> (hdr, hits)
+    readdat(f, src; fix_freq_end=false) -> (hdr, f(hits))
 
 Read a SETI DAT file from `src` (an `IO` or a filename) returning a
 `DatFileHeader` and a `Vector` of `DatFileHit` objects.  If `fix_freq_end=true`
 is passed, the `freq_end` values from the files will be ignored and instead be
 calculated as:
 
-    freq_end = freq_start + Drift_Rate * hdr.tsamp * hdr.nsamps
+```jl
+freq_end = freq_start + Drift_Rate * hdr.tsamp * hdr.nsamps
+```
+
+A function or Type may be passed as the first parameter to modify the hits
+before returning.  This can be used, for example, to have the hits returned as
+a `StructArray` or `DataFrame` (which are not dependencies of this package).
+For example:
+
+```jl
+julia> using SETIDatFiles, StructArrays
+
+julia> hdr, hits = readdat(StructArray, "voyager.dat")
+
+julia> hits.Drift_Rate
+3-element Vector{Float64}:
+ -0.367353
+ -0.367353
+ -0.367353
+```
 """
 function readdat(io::IO; fix_freq_end=false)
     # Read header
@@ -199,6 +219,11 @@ end
 function readdat(datname::AbstractString; fix_freq_end=false)
     #(; datname, open(readdat, datname)...)
     open(io->readdat(io; fix_freq_end), datname)
+end
+
+function readdat(f, src; fix_freq_end=false)
+    h, v = readdat(src; fix_freq_end)
+    h, f(v)
 end
 
 """

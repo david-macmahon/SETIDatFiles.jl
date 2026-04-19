@@ -110,7 +110,8 @@ writedat("canonicalized.dat", readdat("wild.dat"; fix_freq_end=true))
 ---
 
 ```jl
-readdat(src; fix_freq_end=false) -> (SETIDatHeader, Vector{SETIDatHit})
+readdat(src; fix_freq_end=false) -> (hdr, hits)
+readdat(f, src; fix_freq_end=false) -> (hdr, f(hits))
 ```
 
 Read a SETI DAT file from `src` (an `IO` or a filename) returning a
@@ -118,9 +119,26 @@ Read a SETI DAT file from `src` (an `IO` or a filename) returning a
 is passed, the `freq_end` values from the file will be ignored and instead be
 calculated as:
 
-```
+```jl
 freq_end = freq_start + Drift_Rate * hdr.tsamp * hdr.nsamps
 ```
+
+A function or Type may be passed as the first parameter to modify the hits
+before returning.  This can be used, for example, to have the hits returned as
+a `StructArray` or `DataFrame` (which are not dependencies of this package).
+For example:
+
+```jl
+julia> using SETIDatFiles, StructArrays
+
+julia> hdr, hits = readdat(StructArray, "voyager.dat")
+
+julia> hits.Drift_Rate
+3-element Vector{Float64}:
+ -0.367353
+ -0.367353
+ -0.367353
+ ```
 
 ---
 
