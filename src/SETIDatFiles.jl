@@ -34,6 +34,16 @@ struct DatFileHeader
     foff::Float64
     maxdr::Float64
     nsamps::Int
+
+    DatFileHeader(
+        fbh5name, source_name,
+        tstart, src_raj, src_dej,
+        tsamp, foff, maxdr, nsamps
+    ) = new(
+        basename(fbh5name), source_name,
+        tstart, src_raj, src_dej,
+        tsamp, foff, maxdr, nsamps
+    )
 end
 
 """
