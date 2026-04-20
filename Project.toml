@@ -1,6 +1,6 @@
 name = "SETIDatFiles"
 uuid = "14f6aa9e-6b23-430a-a35a-75a1b621cf5b"
-version = "0.0.3"
+version = "0.1.0"
 authors = ["David MacMahon <davidm@astro.berkeley.edu>"]
 
 [deps]
