@@ -41,16 +41,17 @@ Pkg.add(url="https://github.com/david-macmahon/SETIDatFiles.jl")
 `DatFileHeader` has fields for the SETI DAT file header metadata.  Where
 possible, field names mirror SIGPROC Filterbank header names.
 
-| Field      | Type    | Description                                          |
-|:-----------|:--------|:-----------------------------------------------------|
-| `fbh5name` | String  | Name of the file containing the observational data   |
-| `tstart`   | Float64 | The start time of the observation (MJD)              |
-| `src_raj`  | Float64 | Source right ascension (J2000, hours)                |
-| `src_dej`  | Float64 | Source declination (J2000, degrees)                  |
-| `tsamp`    | Float64 | Integration time of each time sample (seconds)       |
-| `foff`     | Float64 | Frequency resolution in (MHz, but in file it is Hz!) |
-| `maxdr`    | Float64 | Maximum drift rate searched (Hz/s)                   |
-| `nsamps`   | Int     | Number of samples (aka time steps) in FBH5 file      |
+| Field         | Type    | Description                                          |
+|:--------------|:--------|:-----------------------------------------------------|
+| `fbh5name`    | String  | Name of the file containing the observational data   |
+| `source_name` | String  | Name of the file containing the observational data   |
+| `tstart`      | Float64 | The start time of the observation (MJD)              |
+| `src_raj`     | Float64 | Source right ascension (J2000, hours)                |
+| `src_dej`     | Float64 | Source declination (J2000, degrees)                  |
+| `tsamp`       | Float64 | Integration time of each time sample (seconds)       |
+| `foff`        | Float64 | Frequency resolution in (MHz, but in file it is Hz!) |
+| `maxdr`       | Float64 | Maximum drift rate searched (Hz/s)                   |
+| `nsamps`      | Int     | Number of samples (aka time steps) in FBH5 file      |
 
 ### `DatFileHit`
 
